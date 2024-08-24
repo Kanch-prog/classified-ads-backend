@@ -9,6 +9,12 @@ app.use(cors());
 app.use(express.json());
 app.use('/api/ads', adRoutes);
 
+// Add a root route
+app.get('/', (req, res) => {
+  res.send('Welcome to the Classified Ads API! Use /api/ads to interact with ads.');
+});
+
+
 const PORT = process.env.PORT || 5000;
 
 mongoose
