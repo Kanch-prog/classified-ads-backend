@@ -44,19 +44,19 @@ router.get('/user-ads', authenticateToken, async (req, res) => {
   }
 });
 
-router.post('/api/payment', async (req, res) => {
+router.post('/payment', async (req, res) => {
+  const { id } = req.body;
   try {
-    const { id } = req.body;
     const payment = await stripe.paymentIntents.create({
       amount: 1000, // Amount in cents
       currency: 'usd',
       payment_method: id,
+      confirmation_method: 'manual',
       confirm: true,
     });
-
-    res.status(200).json({ success: true, payment });
+    res.json({ success: true, payment });
   } catch (error) {
-    console.error('Error processing payment', error);
+    console.error('Payment Error:', error);
     res.status(500).json({ success: false, error: error.message });
   }
 });
